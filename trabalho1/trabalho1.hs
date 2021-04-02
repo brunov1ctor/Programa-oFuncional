@@ -120,6 +120,21 @@ intercala x [] = x
 intercala [] x = x
 intercala (x1:xs1) (x2:xs2) = x1:x2:intercala xs1 xs2
 
+--14--
+
+type Contato = (String, String, String, String)
+type Contatos = [Contato]
+
+contatos = [
+    ("yan","segismundo pereira","99999-99","yan.lucas.21@gmail.com"),
+    ("lucas","segismundo pereira","99999-99","yan21@gmail.com"),
+    ("dias","segismundo pereira","99999-99","lucas.21@gmail.com")
+    ]
+
+procuraContato :: String -> Contatos -> String
+procuraContato _ [] = "contato nao encontrado"
+procuraContato a ((nome, _, _, email): xs) = if a == email then nome else procuraContato a xs
+
 --19--
 
 notas = [1,2,5,10,20,50,100]
