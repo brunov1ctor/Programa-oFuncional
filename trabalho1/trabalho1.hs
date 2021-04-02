@@ -120,6 +120,13 @@ intercala x [] = x
 intercala [] x = x
 intercala (x1:xs1) (x2:xs2) = x1:x2:intercala xs1 xs2
 
+--13--
+
+zipar:: [Int]->[Int]->[[Int]]
+zipar _ [] = []
+zipar [] _ = []
+zipar (x1:xs1) (x2:xs2) = [x1,x2] : zipar xs1 xs2
+
 --14--
 
 type Contato = (String, String, String, String)
