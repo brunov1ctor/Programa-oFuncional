@@ -101,6 +101,25 @@ fizzbuzz n = [if mod x 2 == 0 then "FIZZ" else
 sel_multiplos:: Int->[Int]->[Int]
 sel_multiplos n l = [x|x<-l, mod x n == 0]
 
+--11--
+
+quantos::Int->[Int]->Int
+quantos n [] = 0
+quantos n (x:xs)
+ | x == n = 1 + quantos n xs
+ | otherwise = quantos n xs
+ 
+unica_ocorrencia:: Int->[Int]->Bool
+unica_ocorrencia n l = if (quantos n l == 1) then True else False 
+
+--12--
+
+intercala::[Int]->[Int]->[Int]
+intercala [] [] = []
+intercala x [] = x
+intercala [] x = x
+intercala (x1:xs1) (x2:xs2) = x1:x2:intercala xs1 xs2
+
 --19--
 
 notas = [1,2,5,10,20,50,100]
