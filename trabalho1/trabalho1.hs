@@ -100,4 +100,11 @@ fizzbuzz n = [if mod x 2 == 0 then "FIZZ" else
 
 sel_multiplos:: Int->[Int]->[Int]
 sel_multiplos n l = [x|x<-l, mod x n == 0]
-    
+
+--19--
+
+notas = [1,2,5,10,20,50,100]
+
+notasTroco:: Int -> [[Int]]
+notasTroco 0 = [[]]
+notasTroco valor = [v:vs | v <- notas, valor >= v, vs <- notasTroco (valor-v) ]
