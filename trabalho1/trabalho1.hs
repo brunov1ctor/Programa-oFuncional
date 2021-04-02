@@ -142,6 +142,59 @@ procuraContato :: String -> Contatos -> String
 procuraContato _ [] = "contato nao encontrado"
 procuraContato a ((nome, _, _, email): xs) = if a == email then nome else procuraContato a xs
 
+--15--
+
+type Pessoa = (String, Float, Int, Char)
+pessoas :: [Pessoa]
+pessoas = [ ("Rosa", 1.66, 27, 'F'),
+     ("João", 1.85, 26, 'C'),
+     ("Maria", 1.55, 62, 'S'),
+     ("Jose", 1.78, 42, 'C'),
+     ("Paulo", 1.93, 25, 'S'),
+     ("Clara", 1.70, 33, 'C'),
+     ("Bob", 1.45, 21, 'C'),
+     ("Rosana", 1.58,39, 'S'),
+     ("Daniel", 1.74, 72, 'S'),
+     ("Jocileide", 1.69, 18, 'S') ]
+
+--Main Functions--
+
+alturaMedia :: [Pessoa] -> Float
+alturaMedia x = calculaMedia x 0 0
+
+menorIdade :: [Pessoa] -> Int
+menorIdade ((_,_,age,_):xs) = procuraMenorIdade xs age
+
+maisVelho :: [Pessoa] -> (String, Char)
+maisVelho (x:xs) = procuraMaisVelho xs x
+
+maisQue50 :: [Pessoa] -> [Pessoa]
+maisQue50 lista = procuraMaisVelhosQue lista 50 []
+
+casadosMaisVelhorQue :: [Pessoa] -> Int -> Int
+casadosMaisVelhorQue lista idade = length (filter ehCasado (procuraMaisVelhosQue lista idade []))
+
+--Auxiliary Functions--
+
+calculaMedia :: [Pessoa] -> Float -> Float -> Float
+calculaMedia [] sum count = sum/count
+calculaMedia ((_,altura,_,_):xs) sum count = calculaMedia xs (sum+altura) (count + 1.0)
+
+procuraMenorIdade :: [Pessoa] -> Int -> Int
+procuraMenorIdade [] idade = idade
+procuraMenorIdade ((_,_,age,_):xs) idade = if age < idade then procuraMenorIdade xs age else procuraMenorIdade xs idade
+
+procuraMaisVelho :: [Pessoa] -> Pessoa -> (String, Char)
+procuraMaisVelho [] (nome,_,_,estado) = (nome, estado)
+procuraMaisVelho ((nome1,altura1,idade1,estado1):xs) (nome2,altura2,idade2,estado2) = if idade1 > idade2 then procuraMaisVelho xs (nome1,altura1,idade1,estado1) else procuraMaisVelho xs (nome2,altura2,idade2,estado2)
+
+procuraMaisVelhosQue :: [Pessoa] -> Int -> [Pessoa] -> [Pessoa]
+procuraMaisVelhosQue [] _ lista = lista
+procuraMaisVelhosQue ((nome,altura,idade,estado):xs) idadeLimite lista = if idade > idadeLimite then procuraMaisVelhosQue xs idadeLimite (lista ++ [(nome,altura,idade,estado)]) else procuraMaisVelhosQue xs 50 lista
+
+ehCasado :: Pessoa -> Bool 
+ehCasado (_,_,_,estado) = estado == 'C'
+
 --19--
 
 notas = [1,2,5,10,20,50,100]
