@@ -1,5 +1,5 @@
 -- Bruno Victor da Silva 11621BCC043
--- Yan Lucas Dias
+-- Yan Lucas Dias 11621BCC029
 -- Trabalho 1 PF
 
 --1--
@@ -220,20 +220,3 @@ notas = [1,2,5,10,20,50,100]
 notasTroco:: Int -> [[Int]]
 notasTroco 0 = [[]]
 notasTroco valor = [v:vs | v <- notas, valor >= v, vs <- notasTroco (valor-v) ]
-
---20--
-
-type Pos = (Int,Int)
--- verifica se uma posicao ataca outra no tabuleiro:
-atacar :: Pos -> Pos -> Bool
-atacar (row1,col1) (row2,col2) = (col1==col2) || (row1==row2) || (row1+col1 == row2+col2) || (row1-col1 == row2-col2)
--- verifica se a posicao pos ataca alguma das posicoes da lista:
-posAtaque:: [Pos] -> Pos -> Bool
-posAtaque [] pos = True
-posAtaque (p:xp) pos = not(atacar p pos) && posAtaque xp pos
--- demonstra as possibilidades de posicionamento das rainhas:
-rainhas :: Int -> [[Pos]]
-rainhas n = rainha n
- where rainha 0 = []
-       rainha 1 = [[(1,c)] | c <- [1..n]]
-       rainha x = [ (x,c) : gx | c <- [1..n], gx <- rainha (x-1), posAtaque gx (x,c) ]
