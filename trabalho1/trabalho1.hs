@@ -199,7 +199,7 @@ ehCasado (_,_,_,estado) = estado == 'C'
 
 insere_ord:: Ord a => a->[a]->[a]
 insere_ord v [] = [v]
-insere_ord v (x:xs) = if v > x then x:v:xs else insere_ord v xs
+insere_ord v (x:xs) = if v < x then v:x:xs else x:insere_ord v xs
 
 --17--
 
