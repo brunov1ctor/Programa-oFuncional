@@ -284,7 +284,7 @@ secondHalf xs = let { n = length xs } in drop (div n 2) xs       -- apenas retor
 merge :: Ord a => ([a],Integer) -> ([a],Integer) -> ([a],Integer)      -- entrada tambem precisou ser ([],Integer) por receber a saida de msort ()
 merge (xs,_) ([],_) = (xs,0)               -- caso que so há uma lista
 merge ([],_) (ys,_) = (ys,0)               -- caso que so há uma lista
-merge ((x:xs),ac1) ((y:ys),ac2)            -- acumuladores ac1 e ac2 começaram com valor 0 recebendo de msort()
+merge ((x:xs),_) ((y:ys),_)            -- acumuladores ac1 e ac2 começaram com valor 0 recebendo de msort()
  |x <= y    = (x:l1,ac1+1)                 -- comparacoes entre os primeiros elementos de cada lista e incremento de comparacoes
  |otherwise = (y:l2,ac2+1)
   where
