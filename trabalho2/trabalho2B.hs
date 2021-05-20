@@ -1,7 +1,7 @@
 data Exp = 
     Val Int -- um numero
     | Add Exp Exp -- soma de duas expressoes
-    | Sub Exp Exp -- subtração de duas expressoes
+    | Sub Exp Exp -- subtração de duas expressoes
     | Mult Exp Exp -- multiplicacao de duas expressoes
     | Div Exp Exp -- divisao de duas expressoes
     
@@ -35,3 +35,22 @@ vencedor (j1,j2) = if vence j1 j2 then j1 else j2
 vencedoras :: [(Jogada, Jogada)] -> [Jogada]
 vencedoras [x] = [vencedor x]
 vencedoras (x:xs) = vencedor x : vencedoras xs
+
+data Nebuloso = Verdadeiro 
+    | Falso 
+    | Talvez Float 
+    deriving (Show)
+
+fuzzifica :: Float -> Nebuloso
+fuzzifica x 
+    |x <= 0 = Falso
+    |x >= 1 = Verdadeiro
+    |otherwise = Talvez x
+
+verificaAlto :: Float -> Nebuloso
+verificaAlto altura = fuzzifica y
+    where y = (altura-1.70) / 0.20
+
+verificaBarato :: Float -> Nebuloso
+verificaBarato custo = fuzzifica y
+    where y = (50.000-custo) / 20.000
