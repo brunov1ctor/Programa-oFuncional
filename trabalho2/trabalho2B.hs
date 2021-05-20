@@ -33,8 +33,7 @@ vencedor :: (Jogada, Jogada) -> Jogada
 vencedor (j1,j2) = if vence j1 j2 then j1 else j2
 
 vencedoras :: [(Jogada, Jogada)] -> [Jogada]
-vencedoras [x] = [vencedor x]
-vencedoras (x:xs) = vencedor x : vencedoras xs
+vencedoras = map vencedor
 
 data Nebuloso = Verdadeiro 
     | Falso 
@@ -54,3 +53,49 @@ verificaAlto altura = fuzzifica y
 verificaBarato :: Float -> Nebuloso
 verificaBarato custo = fuzzifica y
     where y = (50.000-custo) / 20.000
+
+data Estudande = 
+    Colegio { 
+        ano :: Int, 
+        colegio :: String, 
+        matricula :: String, 
+        altura :: Float, 
+        peso :: Float 
+    }
+    |Universitario { 
+        universidade :: String, 
+        curso :: String, 
+        matricula :: String, 
+        altura :: Float, 
+        idade :: Int 
+    }
+
+alunos :: [Estudande]
+alunos = [
+    Colegio { ano = 1, colegio = "Nacional", matricula = "Nac11", altura = 1.55, peso = 55.0 },
+    Colegio { ano = 3, colegio = "Nacional", matricula = "Nac12", altura = 1.95, peso = 90.0 },
+    Colegio { ano = 2, colegio = "Nacional", matricula = "Nac13", altura = 1.87, peso = 87.0 },
+    Colegio { ano = 5, colegio = "Gabarito", matricula = "Gab11", altura = 1.82, peso = 76.0 },
+    Colegio { ano = 7, colegio = "Gabarito", matricula = "Gab12", altura = 1.75, peso = 67.0 },
+    Colegio { ano = 1, colegio = "Gabarito", matricula = "Gab13", altura = 1.78, peso = 65.0 },
+    Colegio { ano = 2, colegio = "Olimpo", matricula = "Oli11", altura = 1.88, peso = 95.0 },
+    Colegio { ano = 8, colegio = "Olimpo", matricula = "Oli12", altura = 1.72, peso = 89.0 },
+    Colegio { ano = 9, colegio = "Olimpo", matricula = "Oli13", altura = 1.45, peso = 50.0 },
+    Colegio { ano = 3, colegio = "Olimpo", matricula = "Oli14", altura = 1.99, peso = 102.0 },
+    Universitario { universidade = "UFU", curso = "Comp", matricula = "11111111", altura = 1.55, idade = 21 },
+    Universitario { universidade = "UFU", curso = "Med", matricula = "11111112", altura = 1.95, idade = 22 },
+    Universitario { universidade = "UFU", curso = "Eng", matricula = "11111113", altura = 1.87, idade = 25 },
+    Universitario { universidade = "UNITRI", curso = "Comp", matricula = "11111114", altura = 1.82, idade = 22 },
+    Universitario { universidade = "UNITRI", curso = "Med", matricula = "11111115", altura = 1.75, idade = 19 },
+    Universitario { universidade = "UNITRI", curso = "Eng", matricula = "11111116", altura = 1.78, idade = 18 },
+    Universitario { universidade = "UNITRI", curso = "Comp", matricula = "11111117", altura = 1.88, idade = 24 },
+    Universitario { universidade = "UNA", curso = "Comp", matricula = "11111118", altura = 1.72, idade = 23 },
+    Universitario { universidade = "UNA", curso = "Med", matricula = "11111119", altura = 1.45, idade = 20 },
+    Universitario { universidade = "UNA", curso = "Eng", matricula = "11111121", altura = 1.99, idade = 19 }
+    ]
+
+verificaEstudante :: Estudande -> (String, Nebuloso)
+verificaEstudante a = (matricula a, verificaAlto (altura a))
+
+descobreAltos :: [Estudande] -> [(String, Nebuloso)]
+descobreAltos = map verificaEstudante
