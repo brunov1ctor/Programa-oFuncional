@@ -99,3 +99,46 @@ verificaEstudante a = (matricula a, verificaAlto (altura a))
 
 descobreAltos :: [Estudande] -> [(String, Nebuloso)]
 descobreAltos = map verificaEstudante
+
+data ArvoreBinInt = Nulo | 
+                    No Int ArvoreBinInt ArvoreBinInt
+                    deriving Show
+
+arvEx = (No 2 (No 7 (No 2 Nulo Nulo)
+                    (No 6 (No 5 Nulo Nulo) 
+                          (No 11 Nulo Nulo)))
+               (No 5 Nulo 
+                     (No 9 (No 4 Nulo Nulo) 
+                            Nulo)))
+
+-- Exemplo Percursos
+
+emOrdem :: ArvoreBinInt -> [Int]
+emOrdem Nulo = []
+emOrdem (No x esq dir) = emOrdem esq ++ [x] ++ emOrdem dir
+
+preOrdem :: ArvoreBinInt -> [Int]
+preOrdem Nulo = []
+preOrdem (No x esq dir) = [x] ++ preOrdem esq ++ preOrdem dir
+
+posOrdem :: ArvoreBinInt -> [Int]
+posOrdem Nulo = []
+posOrdem (No x esq dir) = posOrdem esq ++ posOrdem dir ++ [x]
+
+-- Exercicios
+
+folhas :: ArvoreBinInt -> [Int]
+folhas Nulo = []
+folhas (No x Nulo Nulo) = [x]
+folhas (No x esq dir) = folhas esq ++ folhas dir
+
+nosInternos :: ArvoreBinInt -> [Int]
+nosInternos Nulo = []
+nosInternos (No _ Nulo Nulo) = []
+nosInternos (No x esq dir) = nosInternos esq ++ nosInternos dir ++ [x]
+
+somaNosInternos :: ArvoreBinInt -> Int
+somaNosInternos a = sum (nosInternos a)
+
+pertence :: Int -> ArvoreBinInt -> Bool 
+pertence valor arvore = valor `elem` emOrdem arvore
