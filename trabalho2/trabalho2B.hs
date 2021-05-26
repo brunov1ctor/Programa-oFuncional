@@ -1,3 +1,7 @@
+-- Bruno Victor da Silva 11621BCC043
+-- Yan Lucas Dias 11621BCC029
+-- Trabalho 2 PF
+
 data Exp = 
     Val Int -- um numero
     | Add Exp Exp -- soma de duas expressoes
