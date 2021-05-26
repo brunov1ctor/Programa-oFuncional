@@ -1,6 +1,6 @@
 -- Bruno Victor da Silva 11621BCC043
 -- Yan Lucas Dias 11621BCC029
--- Trabalho 1 PF
+-- Trabalho 2 PF
 
 l1=[1..2000]
 l2=[2000,1999..1]
