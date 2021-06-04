@@ -113,37 +113,36 @@ selecao1 :: [Integer]->([Integer],Integer)
 selecao1 [] = ([],0)                  -- caso base lista vazia
 selecao1 (x1:xs1) = (comparador:teste,ac1+ac2)
  where
-  (l1,l2,comparador,ac1) = remove_menor xs1 x1  -- mando o tail da lista e o primeiro elemento
-  nl = l1++l2
+  (nl,comparador,ac1) = remove_menor xs1 x1  -- mando o tail da lista e o primeiro elemento
   (teste,ac2) = selecao1 nl
   
 --										([menor,...],[maior,...],num a ser comparado, contador de comparação)
-remove_menor :: [Integer] -> Integer -> ([Integer],[Integer],Integer,Integer)
-remove_menor [] n = ([],[],n,0)     --caso base lista vazia
+remove_menor :: [Integer] -> Integer -> ([Integer],Integer,Integer)
+remove_menor [] n = ([],n,0)     --caso base lista vazia
 remove_menor (x:xs) n                   -- n é o numero a ser comparado
- | n < x = (nl1,[x]++nl2,comparador1,ac_trocas1)  -- percorre lista encontrando menor
- | otherwise = (nl3,[n]++nl4,comparador2,ac_trocas2+1) -- encontrado novo menor que n
+ | n < x = ([x]++nl1,comparador1,ac_trocas1+1)  -- percorre lista encontrando menor
+ | otherwise = ([n]++nl2,comparador2,ac_trocas2+1) -- encontrado novo menor que n
  where
-  (nl1,nl2,comparador1,ac_trocas1) = remove_menor xs n  --caso n<x
-  (nl3,nl4,comparador2,ac_trocas2) = remove_menor xs x
+  (nl1,comparador1,ac_trocas1) = remove_menor xs n  --caso n<x
+  (nl2,comparador2,ac_trocas2) = remove_menor xs x
+  
 -- Variação 2: Refaça a implementação do algoritmo Seleção usando funções genéricas (foldr ou foldr1).
-selecao2 :: [Integer]->([Integer],Integer)
+selecao2 :: [Int]->([Int],Int)
 selecao2 [] = ([],0)                  -- caso base lista vazia
 selecao2 (x1:xs1) = (comparador:teste,ac1+ac2)
  where
-  (l1,l2,comparador,ac1) = remove_menor xs1 x1  -- mando o tail da lista e o primeiro elemento
-  nl = l1++l2
-  (teste,ac2) = selecao1 nl
+  (nl,comparador,ac1) = remove_menor2 xs1 x1  -- mando o tail da lista e o primeiro elemento
+  (teste,ac2) = selecao2 nl
   
 --										([menor,...],[maior,...],num a ser comparado, contador de comparação)
-remove_menor2 :: [Integer] -> Integer -> ([Integer],[Integer],Integer,Integer)
-remove_menor2 [] n = ([],[],n,0)     --caso base lista vazia
-remove_menor2 (x:xs) n                   -- n é o numero a ser comparado
- | foldr1 min (x:xs) == n = (nl1,[x]++nl2,comparador1,ac_trocas1)  -- foldr1 verifica se o menor elemento é n
- | otherwise = (nl3,[n]++nl4,comparador2,ac_trocas2+1) -- encontrado novo menor que n
+remove_menor2 :: [Int] -> Int -> ([Int],Int,Int)
+remove_menor2 [] n = ([],n,0)     --caso base lista vazia
+remove_menor2 l n = (nl,foldr min n l,length(l)-1)  -- foldr1 verifica se o menor elemento é n                  -- n é o numero a ser comparado
  where
-  (nl1,nl2,comparador1,ac_trocas1) = remove_menor xs n  --caso n<x
-  (nl3,nl4,comparador2,ac_trocas2) = remove_menor xs x
+  nl = remove (n:l) (foldr min n l)   --tenho que remover separado ja a foldr não remove
+  
+remove [] _ = []
+remove (x:xs) n = if x == n then xs else [x]++(remove xs n)
 
 --1)
 -- variacao 1 com contador - ordenou lista l1 com 0 trocas, l2 com 1999000,l3 com 2000 trocas 
