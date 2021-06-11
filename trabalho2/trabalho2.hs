@@ -51,7 +51,7 @@ troca [x] _ = ([x],0)    --caso de parada 1 elemento na lista
 troca l 0 = (l,0)     --caso de parada da recursão sem trocas (PARADA ANTECIPADA)
 troca (x:y:zs) n     --iteração na linha
  |x>y = (x1,ac1+1)    --elemento anterior é maior que o primeiro incrementa
- |otherwise = (x2,ac2)   --caso que não incrementa
+ |otherwise = (x2,ac2+1)   --caso que não incrementa
  where
   (aux1,ac1) = troca (x:zs) (n-1)   --(lista ,acumulador de trocas) e itero
   x1 = y:aux1 --lista se x>y
